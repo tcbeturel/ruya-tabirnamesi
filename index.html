@@ -285,7 +285,7 @@ function anaGuncelle(){
   const yazi=document.getElementById("karsilamaYazi");
   if(profil.isim){
     const yl=hesaplaYasamYolu(profil.dogumTarihi);
-    yazi.innerHTML=`Hoş geldiniz, <strong>${profil.isim}</strong>${yl?` <span style="color:#c4b5fd;font-weight:400">· Yaşam Yolu: ${yl}</span>`:""}`;
+    yazi.innerHTML=`Hoş geldiniz, <strong>${kacir(profil.isim)}</strong>${yl?` <span style="color:#c4b5fd;font-weight:400">· Yaşam Yolu: ${yl}</span>`:""}`;
     div.style.display="flex";
   } else {div.style.display="none";}
   const r=document.getElementById("arsivRozet");
@@ -346,7 +346,7 @@ function arsivCiz(){
         <span class="arsiv-tarih">${new Date(r.tarih).toLocaleDateString("tr-TR",{day:"numeric",month:"long",year:"numeric"})}</span>
         <button class="sil-btn" onclick="arsivSil(event,${r.id})">✕</button>
       </div>
-      <div class="arsiv-onizleme">${r.ruya.slice(0,120)}${r.ruya.length>120?"...":""}</div>
+      <div class="arsiv-onizleme">${kacir(r.ruya.slice(0,120))}${r.ruya.length>120?"...":""}</div>
       <div class="arsiv-alt"><span class="arsiv-mesaj">💬 ${r.mesajlar.length} mesaj</span><span class="arsiv-devam">Devam et →</span></div>
     </div>`).join("")}</div>`;
 }
@@ -508,8 +508,11 @@ function hesaplaEbced(isim){
   const e={a:1,b:2,c:3,ç:3,d:4,e:5,f:80,g:3,ğ:3,h:8,ı:10,i:10,j:3,k:20,l:30,m:40,n:50,o:70,ö:70,p:80,r:200,s:60,ş:300,t:9,u:6,ü:6,v:6,y:10,z:7};
   return isim.toLowerCase().split("").reduce((t,h)=>t+(e[h]||0),0);
 }
+function kacir(m){
+  return String(m).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
+}
 function formatla(m){
-  return m.replace(/\*\*(.*?)\*\*/g,"<strong>$1</strong>").replace(/\*(.*?)\*/g,"<em>$1</em>").replace(/\n/g,"<br/>");
+  return kacir(m).replace(/\*\*(.*?)\*\*/g,"<strong>$1</strong>").replace(/\*(.*?)\*/g,"<em>$1</em>").replace(/\n/g,"<br/>");
 }
 </script>
 </body>
